@@ -1,0 +1,26 @@
+﻿@model LoginModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="box">
+    <form asp-action="Login" asp-controller="Application" asp-anti-forgery="true">
+        <div class="form-outer">
+            <div class="validation" asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="Name">Введите имя</label><br />
+                <input type="text" asp-for="Name" />
+                <span asp-validation-for="Name" />
+            </div>
+            <div>
+                <label asp-for="Password">Введите пароль</label><br />
+                <input asp-for="Password" />
+                <span asp-validation-for="Password" />
+            </div>
+            <div>
+                <input type="submit" value="Вход" />
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,52 @@
+﻿@model CinamePackage
+@{
+    ViewBag.Title = "Home page";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="box" style="margin-bottom: 10px; padding-bottom: 40px;">
+    <h2 style="margin-bottom: 10px;">Премьеры:</h2>
+    <section class="splide" aria-label="Splide Basic HTML Example">
+  <div class="splide__track">
+		<ul class="splide__list">
+            @foreach (var films in Model.lastCinemas)
+            {
+		    	<li class="splide__slide">
+                    <a class="itemFilm">
+                    <div class="imageContent"><img src="@films.posterUrlPreview" /></div>
+                    <div style="flex: 2;">
+                        <p class="poster-name">@(String.IsNullOrEmpty(films.nameRu)? films.nameOriginal : films.nameRu)</p>
+                        <p class="poster-info">@(String.Join(", ", films.genres.Select(m => m.genre)))</p>
+                        <p class="poster-info">@films.year <span style="font-size: 15px;color: #a7a7a7;">·</span> @(String.Join(", ", films.countries.Select(m => m.country)))</p>
+                        <div class="poster-raiting">Рейтинг: @films.ratingKinopoisk</div>
+                    </div>
+                </a>
+                </li>
+            }
+		</ul>
+  </div>
+</section>
+</div>
+
+<div class="box">
+    <div class="itemsContent">
+        @foreach (var films in Model.items)
+        {
+            <a class="itemFilm" href="@(Url.Action("Shedule", "Application", new { id = films.kinopoiskId}))">
+                <div class="imageContent"><img src="@films.posterUrlPreview" /></div>
+                <div style="flex: 2;">
+                    <p class="poster-name">@(String.IsNullOrEmpty(films.nameRu)? films.nameOriginal : films.nameRu)</p>
+                    <p class="poster-info">@(String.Join(", ", films.genres.Select(m => m.genre)))</p>
+                    <p class="poster-info">@films.year <span style="font-size: 15px;color: #a7a7a7;">·</span> @(String.Join(", ", films.countries.Select(m => m.country)))</p>
+                    <div class="poster-raiting">Рейтинг: @films.ratingKinopoisk</div>
+                </div>
+            </a>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script>
+         new Splide('.splide').mount();
+    </script>
+}

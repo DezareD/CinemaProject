@@ -1,0 +1,58 @@
+﻿@model CinemaShedule
+@{
+    ViewBag.Title = "Shedule page";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="box">
+    <div style="display: flex">
+        <div style="flex: 1">
+            <a class="itemFilm" style="padding: 50px;">
+                <div class="imageContent"><img src="@Model.cinema.posterUrlPreview" /></div>
+                <div style="flex: 2;">
+                    <p class="poster-name">@(String.IsNullOrEmpty(Model.cinema.nameRu)? Model.cinema.nameOriginal : Model.cinema.nameRu)</p>
+                    <p class="poster-info">@(String.Join(", ", Model.cinema.genres.Select(m => m.genre)))</p>
+                    <p class="poster-info">@Model.cinema.year <span style="font-size: 15px;color: #a7a7a7;">·</span> @(String.Join(", ", Model.cinema.countries.Select(m => m.country)))</p>
+                    <div class="poster-raiting">Рейтинг: @Model.cinema.ratingKinopoisk</div>
+                </div>
+            </a>
+        </div>
+        <div style="flex: 1">
+            <div class="menu-shedule">
+                <div class="menu-shedule-item" data-sheduleclicker="1">Вчера</div>
+                <div class="menu-shedule-item active" data-sheduleclicker="2">Сегодня</div>
+                <div class="menu-shedule-item" data-sheduleclicker="3">Завтра</div>
+            </div>
+
+            <div style="display: none;" class="cinema-itemouter" data-sheduleopener="1">
+                @foreach (var k in Model.sheduleDays[0].sheduleItems)
+                {
+                    <div class="cinema-item">
+                        <p class="cinema-time">@k.Date</p>
+                        <p class="cinema-price">от @k.Price рублей</p>
+                    </div>
+                }
+            </div>
+
+            <div class="cinema-itemouter" data-sheduleopener="2">
+                @foreach (var k in Model.sheduleDays[1].sheduleItems)
+                {
+                    <div class="cinema-item">
+                        <p class="cinema-time">@k.Date</p>
+                        <p class="cinema-price">от @k.Price рублей</p>
+                    </div>
+                }
+            </div>
+
+            <div style="display: none;" class="cinema-itemouter" data-sheduleopener="3">
+                @foreach (var k in Model.sheduleDays[2].sheduleItems)
+                {
+                    <div class="cinema-item">
+                        <p class="cinema-time">@k.Date</p>
+                        <p class="cinema-price">от @k.Price рублей</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

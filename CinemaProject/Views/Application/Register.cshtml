@@ -1,0 +1,31 @@
+﻿@model RegisterModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div class="box">
+    <form asp-action="Register" asp-controller="Application" asp-anti-forgery="true">
+        <div class="form-outer">
+            <div class="validation" asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="Name">Введите имя</label><br />
+                <input type="text" asp-for="Name" />
+                <span asp-validation-for="Name" />
+            </div>
+                        <div>
+                <label asp-for="Email">Введите E-mail</label><br />
+                <input type="text" asp-for="Email" />
+                <span asp-validation-for="Email" />
+            </div>
+            <div>
+                <label asp-for="Password">Введите пароль</label><br />
+                <input asp-for="Password" />
+                <span asp-validation-for="Password" />
+            </div>
+            <div>
+                <input type="submit" value="Регистрация" />
+            </div>
+        </div>
+    </form>
+</div>
