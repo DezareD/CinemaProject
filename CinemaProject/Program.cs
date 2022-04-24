@@ -1,7 +1,11 @@
 using CinemaProject;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
+// запускаем builder для приложения
+
 var builder = WebApplication.CreateBuilder(args);
+
+// настраиваем сервисы, контексты
 
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
@@ -23,6 +27,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// настраиваем приложение
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -35,5 +41,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Application}/{action=Index}/{id?}");
 
+// запускаем приложение
 
 app.Run();
