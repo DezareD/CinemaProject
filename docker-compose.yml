@@ -1,0 +1,43 @@
+version: '3.4'
+
+volumes:
+  datafiles:
+
+services:
+  reverse-proxy-server:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./hosts:/etc/nginx/
+    restart: always
+  database:
+    image: mysql
+    ports:
+      - "3307:3306"
+    volumes:
+      - datafiles:/var/lib/mysql
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+  api:
+    build:
+      context: .
+      dockerfile: CinemaProject/Dockerfile
+    depends_on: 
+      - database
+      - reverse-proxy-server
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      DBHOST: $DBHOST
+      DBPORT: $DBPORT
